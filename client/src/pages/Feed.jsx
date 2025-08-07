@@ -9,7 +9,7 @@ const Feed = () => {
 
   const fetchFeeds = async()=>{
     setfeeds(dummyPostsData)
-    setLoading(false)
+    setLoading(false)          
   }
   useEffect(()=>{
     fetchFeeds()
