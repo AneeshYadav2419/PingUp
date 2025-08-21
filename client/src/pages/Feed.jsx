@@ -3,6 +3,7 @@ import { assets, dummyPostsData } from '../assets/assets'
 import Loading from '../components/Loading'
 import StoriesBar from '../components/StoriesBar'
 import PostCard from '../components/PostCard'
+import RecentMessages from '../components/RecentMessages'
 
 const Feed = () => {
   const [feeds, setfeeds] = useState([])
@@ -40,7 +41,7 @@ const Feed = () => {
           <p className='text-slate-600'>Email Marketing</p>
           <p className='text-slate-400'>Superchange your marketting with a powerfull easy to use platfrom built for results </p>
         </div>
-        <h1>Recent messages</h1>
+        <RecentMessages />
       </div>
 
     </div>
