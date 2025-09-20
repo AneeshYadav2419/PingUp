@@ -13,9 +13,39 @@ const ProfileModel = ({setShowEdit}) => {
         cover_photo: null,
         full_name: user.full_name,
     })
+
     const handleSaveProfile = async (e) => {
-        e.preventDefault();
-    }
+  e.preventDefault();
+
+  const formData = new FormData();
+
+  // match backend field names
+  if (editForm.profile_picture) {
+    formData.append("profile", editForm.profile_picture);
+  }
+  if (editForm.cover_photo) {
+    formData.append("cover", editForm.cover_photo);
+  }
+
+  formData.append("username", editForm.username);
+  formData.append("bio", editForm.bio);
+  formData.append("location", editForm.location);
+  formData.append("full_name", editForm.full_name);
+
+  try {
+    const res = await fetch("http://localhost:4000/api/user/update", {
+      method: "POST",
+      body: formData, // ✅ browser sets correct headers automatically
+      credentials: "include", // if you need auth cookies
+    });
+
+    const data = await res.json();
+    console.log("Response:", data);
+  } catch (error) {
+    console.error("Update error:", error);
+  }
+};
+
     return (
         <div className='fixed top-0 bottom-0 left-0 right-0 z-110 h-screen
     overflow-y-scroll bg-black/50'>
@@ -74,7 +104,7 @@ const ProfileModel = ({setShowEdit}) => {
 
                                     <div className='absolute hidden group-hover/cover:flex top-0 left-0 right-0 bottom-0 bg-black/20 rounded-lg
                                     items-center justify-center'>
-                                        <Pencil className='w-5 h-5 text-white2' />
+                                        <Pencil className='w-5 h-5 text-white' />
 
                                     </div>
                                 </div>
