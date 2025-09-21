@@ -42,6 +42,7 @@ import { serve } from "inngest/express";
 import { inngest, functions } from './inngest/inde.js';
 import { clerkMiddleware } from '@clerk/express';
 import userRouter from './routes/userRoutes.js';
+import mongoose from 'mongoose';
 
 const app = express();
 
