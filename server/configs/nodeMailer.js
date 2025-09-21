@@ -1,23 +1,56 @@
+// import nodemailer from 'nodemailer';
+// // create transport 
+// const transporter = nodemailer.createTransport({
+//   host: "smtp-relay.brevo.com",
+//   port: 587,
+  
+//   auth: {
+//     user: process.env.SMTP_USER,
+//     pass: process.env.SMTP_PASS,
+//   },
+// });
+
+// const sendEmail = async (params) => {
+//     const response = await transporter.sendMail({
+//         from: process.env.sendEmail,
+//         to,
+//         subject,
+//         html: body,
+//     })
+//     return response
+// }
+
+// export default sendEmail
+
+// configs/nodeMailer.js
 import nodemailer from 'nodemailer';
-// create transport 
+
 const transporter = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
   port: 587,
-  
+  secure: false,
   auth: {
     user: process.env.SMTP_USER,
     pass: process.env.SMTP_PASS,
   },
 });
 
-const sendEmail = async (params) => {
-    const response = await transporter.sendMail({
-        from: process.env.sendEmail,
-        to,
-        subject,
-        html: body,
-    })
-    return response
-}
+const sendEmail = async ({ to, subject, body, from }) => {
+  // default 'from' to SENDER_EMAIL env var if not provided
+  const fromAddress = from || process.env.SENDER_EMAIL || process.env.SENDER_EMAIL; // fallbacks
 
-export default sendEmail
+  if (!to || !subject || !body) {
+    throw new Error("sendEmail requires { to, subject, body }");
+  }
+
+  const response = await transporter.sendMail({
+    from: fromAddress,
+    to,
+    subject,
+    html: body,
+  });
+
+  return response;
+};
+
+export default sendEmail;
