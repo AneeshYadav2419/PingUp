@@ -1,4 +1,7 @@
-import app from "../server.js"; // your express app
-import serverless from "serverless-http";
+import { serve } from "inngest/vercel"; // or "inngest/vercel" if not Next.js
+import { inngest, functions } from "../inngest/index.js"; 
 
-export default serverless(app);
+export default serve({
+  client: inngest,
+  functions,
+});
