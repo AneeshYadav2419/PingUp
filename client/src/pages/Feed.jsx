@@ -4,14 +4,19 @@ import Loading from '../components/Loading'
 import StoriesBar from '../components/StoriesBar'
 import PostCard from '../components/PostCard'
 import RecentMessages from '../components/RecentMessages'
+import axios from "axios"
 
 const Feed = () => {
   const [feeds, setfeeds] = useState([])
   const [loading, setLoading] = useState(true)
 
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
   const fetchFeeds = async()=>{
     setfeeds(dummyPostsData)
-    setLoading(false)          
+    setLoading(false)  
+    // const data = await axios.get(`${BACKEND_URL}/discover`);
+    // console.log("data - ", data);
   }
   useEffect(()=>{
     fetchFeeds()

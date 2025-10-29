@@ -1,4 +1,3 @@
-import React from 'react'
 import { assets } from '../assets/assets'
 import { Star } from 'lucide-react'
 import { SignIn } from '@clerk/clerk-react'
