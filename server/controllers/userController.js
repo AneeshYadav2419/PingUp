@@ -1,12 +1,12 @@
 import { connect } from "http2";
 import imagekit from "../configs/imageKit.js"
-import Connection from "../models/connection.js";
+import Connection from "../models/Connection.js";
 import User from "../models/User.js"
 import fs from 'fs'
 
 export const getUserData = async (req, res) => {
     try {
-        const { userId } = req.auth;
+        const { userId } = req.auth();
         const user = await User.findById(userId);
         if (!user) {
             return res.json({ success: false, message: "user Not Found" })
@@ -21,7 +21,7 @@ export const getUserData = async (req, res) => {
 
 export const updateUserData = async (req, res) => {
     try {
-        const { userId } = req.auth;
+        const { userId } = req.auth();
         let { username, bio, location, full_name } = req.body;
 
         const tempUser = await User.findById(userId);
@@ -103,7 +103,7 @@ export const updateUserData = async (req, res) => {
 
 export const discoverUsers = async (req, res) => {
     try {
-        const { userId } = req.auth;
+        const { userId } = req.auth();
         const { input } = req.body;
 
         const allUsers = await User.find(
@@ -130,7 +130,7 @@ export const discoverUsers = async (req, res) => {
 
 export const followUser = async (req, res) => {
     try {
-        const { userId } = req.auth;
+        const { userId } = req.auth();
         const { id } = req.body;
 
         const user = await User.findById(userId)
@@ -158,7 +158,7 @@ export const followUser = async (req, res) => {
 
 export const unfollowUser = async (req, res) => {
     try {
-        const { userId } = req.auth;
+        const { userId } = req.auth();
         const { id } = req.body;
 
         const user = await User.findById(userId)
@@ -182,7 +182,7 @@ export const unfollowUser = async (req, res) => {
 
 export const sendConnectionRequest = async (req, res) => {
     try {
-        const { userId } = req.auth;
+        const { userId } = req.auth();
         const { id } = req.body;
 
         const last24Hours = new Date(Date.now() - 24 * 60 * 60 * 1000)
@@ -225,7 +225,7 @@ export const sendConnectionRequest = async (req, res) => {
 
 export const getUserConnections = async (req, res) => {
     try {
-        const { userId } = req.auth;
+        const { userId } = req.auth();
         const user = await User.findById(userId).populate('connections followers following')
 
         const connections = user.connections
@@ -247,7 +247,7 @@ export const getUserConnections = async (req, res) => {
 
 export const acceptConnectionRequest = async (req, res) => {
     try {
-        const { userId } = req.auth;
+        const { userId } = req.auth();
         const { id } = req.body;
         const connection = await Connection.findOne({from_user_id:id, to_user_id: userId})
 

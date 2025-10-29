@@ -6,5 +6,6 @@ const connectionSchema = new mongoose.Schema({
     status: {type: String, enum: ['pending', 'accepted'], default: 'pending'},
 },{timestamps: true})
 
-const Connection = mongoose.model('Connection',connectionSchema)
-export default Connection
+// const Connection = mongoose.model('Connection',connectionSchema)
+const Connection = mongoose.models.Connection || mongoose.model('Connection', connectionSchema);
+export default Connection;
