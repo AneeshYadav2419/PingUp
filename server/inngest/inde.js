@@ -4,11 +4,6 @@ import Connection from "../models/Connection.js";
 import sendEmail from "../configs/nodeMailer.js";
 
 
-import { serve } from "inngest/next";
-import { inngest, functions } from "../inngest/index.js";
-
-export default serve(inngest, functions);
-
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "pingup-app" });
 
@@ -209,3 +204,13 @@ export const functions = [
   syncUserDeletion,
   sendNewConnectionRequestReminder,
 ];
+
+import { inngest } from "./inde.js";
+
+export const pingFunction = inngest.createFunction(
+  { id: "ping" },
+  { event: "app/ping" },
+  async () => {
+    console.log("Ping received ✅");
+  }
+);
