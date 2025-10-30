@@ -3,6 +3,12 @@ import User from "../models/User.js"
 import Connection from "../models/Connection.js";
 import sendEmail from "../configs/nodeMailer.js";
 
+
+import { serve } from "inngest/next";
+import { inngest, functions } from "../inngest/index.js";
+
+export default serve(inngest, functions);
+
 // Create a client to send and receive events
 export const inngest = new Inngest({ id: "pingup-app" });
 
